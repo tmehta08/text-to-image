@@ -1,0 +1,13 @@
+[project]
+name = "text-to-image-1"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "accelerate>=1.11.0",
+    "diffusers>=0.35.2",
+    "loguru>=0.7.3",
+    "torch>=2.9.0",
+    "transformers>=4.57.1",
+]

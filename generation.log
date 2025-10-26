@@ -1,0 +1,16 @@
+2025-10-26 16:55:50.617 | INFO     | __main__:<module>:8 - Starting Stable Diffusion pipeline
+2025-10-26 16:55:50.617 | INFO     | __main__:<module>:12 - Using device: mps
+2025-10-26 16:55:50.617 | INFO     | __main__:<module>:18 - Loading model runwayml/stable-diffusion-v1-5 with dtype=torch.float16
+2025-10-26 16:56:12.519 | INFO     | __main__:<module>:32 - Generating 2 images with 25 steps and guidance_scale=7.5
+2025-10-26 16:57:37.472 | SUCCESS  | __main__:<module>:46 - Image generation completed in 84.95 seconds
+2025-10-26 16:57:37.659 | SUCCESS  | __main__:<module>:52 - Saved output_0.png
+2025-10-26 16:57:37.660 | SUCCESS  | __main__:<module>:52 - Saved output_1.png
+2025-10-26 16:57:37.660 | INFO     | __main__:<module>:54 - Request Complete
+2025-10-26 16:59:55.566 | INFO     | __main__:<module>:11 - Starting Stable Diffusion pipeline
+2025-10-26 16:59:55.566 | INFO     | __main__:<module>:15 - Using device: mps
+2025-10-26 16:59:55.566 | INFO     | __main__:<module>:21 - Loading model runwayml/stable-diffusion-v1-5 with dtype=torch.float16
+2025-10-26 17:00:10.873 | INFO     | __main__:<module>:39 - Generating 2 images with 25 steps and guidance_scale=7.5
+2025-10-26 17:01:58.825 | SUCCESS  | __main__:<module>:56 - Image generation completed in 107.95 seconds
+2025-10-26 17:01:58.914 | SUCCESS  | __main__:<module>:62 - Saved output_0.png
+2025-10-26 17:01:58.915 | SUCCESS  | __main__:<module>:62 - Saved output_1.png
+2025-10-26 17:01:58.915 | INFO     | __main__:<module>:64 - Request Complete
