@@ -5,9 +5,9 @@ import time
 import sys
 
 # ----- 1. Configure logger -----
-logger.remove()  # Remove default logger
-logger.add(sys.stdout, level="INFO")  # console logging
-logger.add("generation.log", rotation="10 MB")  # log to file
+logger.remove()
+logger.add(sys.stdout, level="INFO")
+logger.add("generation.log", rotation="10 MB")
 logger.info("Starting Stable Diffusion pipeline")
 
 # ----- 2. Device -----
@@ -16,49 +16,47 @@ logger.info(f"Using device: {device}")
 
 # ----- 3. Load model -----
 model_id = "runwayml/stable-diffusion-v1-5"
-torch_dtype = torch.float16 if device.type == "mps" else torch.float32
+torch_dtype = torch.float32  # safe on M1
 
 logger.info(f"Loading model {model_id} with dtype={torch_dtype}")
 pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch_dtype)
 pipe = pipe.to(device)
-
-# Optional: Disable NSFW safety checker to speed up generation
-pipe.safety_checker = None
+pipe.safety_checker = None  # optional
 
 # ----- 4. Memory-efficient attention -----
-pipe.enable_attention_slicing()  # slices attention for lower VRAM
-# pipe.enable_xformers_memory_efficient_attention()  # optional if xformers installed
+pipe.enable_attention_slicing()
 
 # ----- 5. Prompt and generation settings -----
-prompt = "a futuristic NFL football field, ultra-detailed, 4k"
-batch_size = 2
+prompt = "a futuristic NFL football field, ultra-detailed"
+num_images = 3  # number of images to generate
 num_steps = 25
 guidance_scale = 7.5
-generator = torch.Generator(device=device).manual_seed(42)
+height = 512
+width = 512
+seed = 42
 
-logger.info(f"Generating {batch_size} images with {num_steps} steps and guidance_scale={guidance_scale}")
+logger.info(f"Generating {num_images} image(s) with {num_steps} steps and guidance_scale={guidance_scale}")
 
-# ----- 6. Timing the generation -----
+# ----- 6. Generate images one by one -----
 start_time = time.time()
 
-# Use inference mode and autocast for MPS acceleration
-with torch.inference_mode():
-    with torch.autocast(device.type):
-        images = pipe(
-            [prompt] * batch_size,
+for i in range(num_images):
+    generator = torch.Generator(device=device).manual_seed(seed + i)  # different seed for each image
+    with torch.inference_mode():
+        image = pipe(
+            prompt,
+            height=height,
+            width=width,
             num_inference_steps=num_steps,
             guidance_scale=guidance_scale,
             generator=generator
-        ).images
+        ).images[0]
+
+    filename = f"output_{i}.png"
+    image.save(filename)
+    logger.success(f"Saved {filename}")
 
 end_time = time.time()
 elapsed = end_time - start_time
-logger.success(f"Image generation completed in {elapsed:.2f} seconds")
-
-# ----- 7. Save outputs -----
-for i, img in enumerate(images):
-    filename = f"output_{i}.png"
-    img.save(filename)
-    logger.success(f"Saved {filename}")
-
+logger.success(f"All {num_images} images generated in {elapsed:.2f} seconds")
 logger.info("Request Complete")

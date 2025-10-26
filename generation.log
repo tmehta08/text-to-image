@@ -14,3 +14,7 @@
 2025-10-26 17:01:58.914 | SUCCESS  | __main__:<module>:62 - Saved output_0.png
 2025-10-26 17:01:58.915 | SUCCESS  | __main__:<module>:62 - Saved output_1.png
 2025-10-26 17:01:58.915 | INFO     | __main__:<module>:64 - Request Complete
+2025-10-26 17:03:49.082 | INFO     | __main__:<module>:11 - Starting Stable Diffusion pipeline
+2025-10-26 17:03:49.083 | INFO     | __main__:<module>:15 - Using device: mps
+2025-10-26 17:03:49.083 | INFO     | __main__:<module>:21 - Loading model runwayml/stable-diffusion-v1-5 with dtype=torch.float32
+2025-10-26 17:04:00.623 | INFO     | __main__:<module>:38 - Generating 3 image(s) with 25 steps and guidance_scale=7.5
